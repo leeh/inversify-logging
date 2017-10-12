@@ -6,10 +6,11 @@
     "reflect-metadata": "0.1.8"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.54",
-    "@types/node": "~6.0.52",
     "@types/expect.js": "~0.3.29",
+    "@types/lodash": "4.14.54",
     "@types/mocha": "~2.2.33",
+    "@types/node": "~6.0.52",
+    "@types/socket.io": "~1.4.31",
     "expect.js": "~0.3.1",
     "typemoq": "~1.2.1"
   },
