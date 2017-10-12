@@ -7,5 +7,3 @@ export class ContextRetriever {
         return context || bindingName;
     }
 }
-
-export let contextRetriever = new ContextRetriever();
