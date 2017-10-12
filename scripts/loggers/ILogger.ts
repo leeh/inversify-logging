@@ -15,4 +15,6 @@ export interface ILogger {
     error(error: string | Error);
 
     setLogLevel(level: LogLevel);
+
+    createChildLogger?(context: string): ILogger;
 }

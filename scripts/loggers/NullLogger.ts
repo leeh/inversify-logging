@@ -17,6 +17,10 @@ export class NullLogger implements ILogger {
 
     setLogLevel(level: LogLevel) {
     }
+
+    createChildLogger(context: string[]): ILogger {
+        return new NullLogger();
+    }
 }
 
 export default new NullLogger()
