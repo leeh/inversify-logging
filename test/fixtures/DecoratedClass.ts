@@ -1,6 +1,6 @@
-import Context from "../../scripts/ContextDecorator";
+import LoggingContext from "../../scripts/LoggingContextDecorator";
 
-@Context("CustomContext")
+@LoggingContext("CustomContext")
 export default class DecoratedClass {
 
 }

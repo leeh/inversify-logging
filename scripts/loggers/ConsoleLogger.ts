@@ -36,12 +36,12 @@ class ConsoleLogger implements ILogger {
 
     createChildLogger(context: string) {
         let copy = map<string, string>(this.context, clone);
-        copy.push(context);
+        copy.unshift(context);
         return new ConsoleLogger(copy);
     }
 
     private stringifyContext(context: string[]): string {
-        return `[${context.join(" - ")}]`;
+        return `[${context.join(".")}]`;
     }
 }
 

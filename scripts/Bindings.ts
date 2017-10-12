@@ -16,12 +16,8 @@ export function contextMiddleware(planAndResolve) {
             return nextContextInterceptor(context);
         };
         let service = planAndResolve(args);
-        if (currentServiceId === "ILogger") {
-            let logger = <ILogger>service;
-            if (logger.createChildLogger)
-                return logger.createChildLogger(contextRetriever.retrieve(target, bindingName));
-        }
-        return service;
+        return currentServiceId === "ILogger" && (<ILogger>service).createChildLogger ?
+            (<ILogger>service).createChildLogger(contextRetriever.retrieve(target, bindingName)) : service;
     };
 }
 
