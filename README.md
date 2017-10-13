@@ -32,6 +32,22 @@ class TestClass {
 }
 ```
 
+### Minification
+
+When your code is minified is not possible to access the original constructor function name: just add a decorator on the class in order to provide the context to use.
+
+```typescript
+import {inject} from "inversify";
+import {ILogger, LoggingContext} from "inversify-logging";
+
+@LoggingContext("CustomContext")
+class TestClass {
+
+    constructor(@inject("ILogger") logger: ILogger) {
+        logger.info("Logs!"); // This outputs [CustomContext] Logs!
+    }
+}
+```
 
 ## License
 
