@@ -20,11 +20,11 @@ export class LoggingToSyntax {
 
     }
 
-    to(constructor: Function, bindingName?: string): LoggingToSyntax {
+    to(constructor: Function): LoggingToSyntax {
         this.container.bind<ILogger>("ILogger").toDynamicValue(() => {
             let contextRetriever = new ContextRetriever(),
                 logger = this.container.get<() => ILogger>("ILoggerFactory")();
-            return logger.createChildLogger ? logger.createChildLogger(contextRetriever.retrieve(constructor, bindingName)) : logger;
+            return logger.createChildLogger ? logger.createChildLogger(contextRetriever.retrieve(constructor)) : logger;
         }).whenInjectedInto(constructor);
 
         return this;
