@@ -3,25 +3,30 @@ import {ILogger} from "./loggers/ILogger";
 import ConsoleLogger from "./loggers/ConsoleLogger";
 import {ContextRetriever} from "./ContextRetriever";
 
-export function contextMiddleware(planAndResolve) {
-    let contextRetriever = new ContextRetriever();
-    return (args) => {
-        let nextContextInterceptor = args.contextInterceptor,
-            currentServiceId = args.serviceIdentifier,
-            target = null,
-            bindingName = null;
-        args.contextInterceptor = (context: interfaces.Context) => {
-            target = context.plan.rootRequest.target;
-            bindingName = context.plan.rootRequest.serviceIdentifier;
-            return nextContextInterceptor(context);
-        };
-        let service = planAndResolve(args);
-        return currentServiceId === "ILogger" && (<ILogger>service).createChildLogger ?
-            (<ILogger>service).createChildLogger(contextRetriever.retrieve(target, bindingName)) : service;
-    };
+
+export function activateLogging(container: interfaces.Container): LoggingToSyntax {
+    if (!container.isBound("ILoggerFactory"))
+        container.bind<interfaces.Factory<ILogger>>("ILoggerFactory").toFactory<ILogger>(() => {
+            return () => {
+                return new ConsoleLogger();
+            };
+        });
+    return new LoggingToSyntax(container);
 }
 
-export function bindLoggingInto(container: interfaces.Container): void {
-    container.applyMiddleware(contextMiddleware);
-    container.bind<ILogger>("ILogger").to(ConsoleLogger);
+export class LoggingToSyntax {
+
+    constructor(private container: interfaces.Container) {
+
+    }
+
+    to(constructor: Function, bindingName?: string): LoggingToSyntax {
+        this.container.bind<ILogger>("ILogger").toDynamicValue(() => {
+            let contextRetriever = new ContextRetriever(),
+                logger = this.container.get<() => ILogger>("ILoggerFactory")();
+            return logger.createChildLogger ? logger.createChildLogger(contextRetriever.retrieve(constructor, bindingName)) : logger;
+        }).whenInjectedInto(constructor);
+
+        return this;
+    }
 }
