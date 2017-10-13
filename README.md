@@ -1,5 +1,38 @@
 # Inversify logging
 
+Contextual logging for [inversify](https://github.com/inversify/InversifyJS) powered applications.
+
+## Installation
+
+`
+$ npm i inversify-logging
+`
+
+## Usage
+
+Activate the logger for all the classes you want to be logged.
+
+```typescript
+import {activateLogging} from "inversify-logging";
+
+activateLogging(inversifyContainer).to(TestClass).to(AnotherClass);
+```
+
+And log!
+
+```typescript
+import {inject} from "inversify";
+import {ILogger} from "inversify-logging";
+
+class TestClass {
+
+    constructor(@inject("ILogger") logger: ILogger) {
+        logger.info("Logs!"); // This outputs [TestClass] Logs!
+    }
+}
+```
+
+
 ## License
 
 Copyright 2016 Tierra SpA
