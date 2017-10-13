@@ -1,4 +1,4 @@
-import {injectable, unmanaged} from "inversify";
+import {injectable} from "inversify";
 import {ILogger, LogLevel} from "./ILogger";
 import {map, clone} from "lodash";
 
@@ -6,8 +6,9 @@ import {map, clone} from "lodash";
 class ConsoleLogger implements ILogger {
 
     private logLevel = LogLevel.Debug;
+    private context: string[] = [];
 
-    constructor(@unmanaged() private context: string[] = []) {
+    constructor() {
 
     }
 
@@ -37,7 +38,13 @@ class ConsoleLogger implements ILogger {
     createChildLogger(context: string) {
         let copy = map<string, string>(this.context, clone);
         if (context) copy.push(context);
-        return new ConsoleLogger(copy);
+        let logger = new ConsoleLogger();
+        logger.setContext(copy);
+        return logger;
+    }
+
+    setContext(context: string[]) {
+        this.context = context;
     }
 
     private stringifyContext(context: string[]): string {
