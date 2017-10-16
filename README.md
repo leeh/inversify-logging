@@ -10,44 +10,31 @@ $ npm i inversify-logging
 
 ## Usage
 
-Activate the logger for all the classes you want to be logged.
+Activate the logger for an inversify container:
 
 ```typescript
 import {activateLogging} from "inversify-logging";
 
-activateLogging(inversifyContainer).to(TestClass).to(AnotherClass);
+activateLogging(inversifyContainer);
 ```
 
 And log!
 
 ```typescript
 import {inject} from "inversify";
-import {ILogger} from "inversify-logging";
+import {ILogger, LoggingContext} from "inversify-logging";
 
+@LoggingContext("TestClass")
 class TestClass {
 
-    constructor(@inject("ILogger") logger: ILogger) {
+    @inject("ILogger") logger: ILogger; //Currently only logger injection on properties is supported
+
+    constructor() {
         logger.info("Logs!"); // This outputs [TestClass] Logs!
     }
 }
 ```
 
-### Minification
-
-When your code is minified is not possible to access the original constructor function name: just add a decorator on the class in order to provide the context to use.
-
-```typescript
-import {inject} from "inversify";
-import {ILogger, LoggingContext} from "inversify-logging";
-
-@LoggingContext("CustomContext")
-class TestClass {
-
-    constructor(@inject("ILogger") logger: ILogger) {
-        logger.info("Logs!"); // This outputs [CustomContext] Logs!
-    }
-}
-```
 
 ## License
 
