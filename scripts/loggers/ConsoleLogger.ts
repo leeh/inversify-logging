@@ -35,7 +35,7 @@ class ConsoleLogger implements ILogger {
         this.logLevel = level;
     }
 
-    createChildLogger(context: string) {
+    createChildLogger(context: string): ILogger {
         let copy = map<string, string>(this.context, clone);
         if (context) copy.push(context);
         let logger = new ConsoleLogger();
