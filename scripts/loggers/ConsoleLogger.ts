@@ -8,10 +8,6 @@ class ConsoleLogger implements ILogger {
     private logLevel = LogLevel.Debug;
     private context: string[] = [];
 
-    constructor() {
-
-    }
-
     debug(message: string) {
         if (this.logLevel <= LogLevel.Debug)
             console.log(this.stringifyContext(this.context), message);

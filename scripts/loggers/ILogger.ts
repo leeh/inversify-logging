@@ -16,5 +16,5 @@ export interface ILogger {
 
     setLogLevel(level: LogLevel);
 
-    createChildLogger?(context: string): ILogger;
+    createChildLogger(context: string): ILogger;
 }

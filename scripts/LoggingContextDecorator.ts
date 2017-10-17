@@ -26,13 +26,8 @@ export function initContextLogger() {
             return find(properties[key], (metadata: any) => (metadata.key === "inject" || metadata.key === "lazy_inject") && metadata.value === "ILogger");
         });
 
-    return createChildLogger(this[loggerPropertyName], Reflect.getMetadata(CONTEXT_KEY, this.constructor));
+    if (!this[loggerPropertyName]) return;
 
-}
-
-export function createChildLogger(logger: ILogger, context: string) {
-    if (logger && logger.createChildLogger)
-        logger = logger.createChildLogger(context);
-
-    return logger;
+    if (this[loggerPropertyName].createChildLogger)
+        this[loggerPropertyName] = this[loggerPropertyName].createChildLogger(Reflect.getMetadata(CONTEXT_KEY, this.constructor));
 }
