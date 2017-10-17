@@ -1,3 +1,5 @@
+import {ILogger} from "./loggers/ILogger";
+
 const POST_CONSTRUCT_KEY = "post_construct";
 const TAGGED_PROPS_KEY = "inversify:tagged_props";
 const CONTEXT_KEY = "inversify-logging:context";
@@ -20,13 +22,15 @@ export function initContextLogger() {
     let properties = Reflect.getMetadata(TAGGED_PROPS_KEY, this.constructor),
         loggerPropertyName = find(keys(properties), key =>  {
             return find(properties[key], (metadata: any) => (metadata.key === "inject" || metadata.key === "lazy_inject") && metadata.value === "ILogger");
-        }),
-        logger = this[loggerPropertyName];
+        });
 
-    if (!logger) return;
-
-    if (logger.createChildLogger)
-        this[loggerPropertyName] = this[loggerPropertyName].createChildLogger(Reflect.getMetadata(CONTEXT_KEY, this.constructor));
+    return createChildLogger(this[loggerPropertyName], Reflect.getMetadata(CONTEXT_KEY, this.constructor));
 
 }
 
+export function createChildLogger(logger: ILogger, context: string) {
+    if (logger && logger.createChildLogger)
+        logger = logger.createChildLogger(context);
+
+    return logger;
+}
