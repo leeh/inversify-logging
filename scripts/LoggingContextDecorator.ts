@@ -18,9 +18,11 @@ export function LoggingContext(context: string) {
     };
 }
 
+// This workaround is needed because inversify currently does not provide the current request when binding
+// a service with toDynamicValue
 export function initContextLogger() {
     let properties = Reflect.getMetadata(TAGGED_PROPS_KEY, this.constructor),
-        loggerPropertyName = find(keys(properties), key =>  {
+        loggerPropertyName = find(keys(properties), key => {
             return find(properties[key], (metadata: any) => (metadata.key === "inject" || metadata.key === "lazy_inject") && metadata.value === "ILogger");
         });
 
