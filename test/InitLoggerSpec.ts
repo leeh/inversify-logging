@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import expect = require("expect.js");
 import {Mock, Times} from "typemoq";
-import {ContextualLogger, LoggableClass, NonLoggableClass, SimpleLogger} from "./fixtures/Logs";
+import {ContextualLogger, LoggableClass, NonLoggableClass} from "./fixtures/Logs";
 import {initContextLogger} from "../scripts/LoggingContextDecorator";
 
 describe("Given an object", () => {
@@ -22,7 +22,7 @@ describe("Given an object", () => {
     context("when hasn't got a logger property", () => {
         it("should not thrown an error", () => {
             let object = new NonLoggableClass();
-            let logger = Mock.ofType(SimpleLogger);
+            let logger = Mock.ofType(ContextualLogger);
             (<any>object).logging = logger.object;
 
             expect(() => {

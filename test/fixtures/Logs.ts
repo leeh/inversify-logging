@@ -37,25 +37,3 @@ export class ContextualLogger implements ILogger {
     }
 }
 
-export class SimpleLogger implements ILogger {
-    debug(message: string) {
-        throw new Error("Method not implemented.");
-    }
-
-    info(message: string) {
-        throw new Error("Method not implemented.");
-    }
-
-    warning(message: string) {
-        throw new Error("Method not implemented.");
-    }
-
-    error(error: string | Error) {
-        throw new Error("Method not implemented.");
-    }
-
-    setLogLevel(level: LogLevel) {
-        throw new Error("Method not implemented.");
-    }
-
-}

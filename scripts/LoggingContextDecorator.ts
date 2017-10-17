@@ -28,6 +28,5 @@ export function initContextLogger() {
 
     if (!this[loggerPropertyName]) return;
 
-    if (this[loggerPropertyName].createChildLogger)
-        this[loggerPropertyName] = this[loggerPropertyName].createChildLogger(Reflect.getMetadata(CONTEXT_KEY, this.constructor));
+    this[loggerPropertyName] = this[loggerPropertyName].createChildLogger(Reflect.getMetadata(CONTEXT_KEY, this.constructor));
 }
