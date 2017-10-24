@@ -36,6 +36,7 @@ class ConsoleLogger implements ILogger {
         if (context) copy.push(context);
         let logger = new ConsoleLogger();
         logger.setContext(copy);
+        logger.setLogLevel(this.logLevel);
         return logger;
     }
 

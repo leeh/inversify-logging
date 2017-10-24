@@ -4,5 +4,5 @@ import ConsoleLogger from "./loggers/ConsoleLogger";
 
 export function activateLogging(container: interfaces.Container) {
     if (!container.isBound("ILogger"))
-        container.bind<ILogger>("ILogger").to(ConsoleLogger);
+        container.bind<ILogger>("ILogger").to(ConsoleLogger).inSingletonScope();
 }
