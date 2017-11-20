@@ -4,7 +4,7 @@ import {map, clone} from "lodash";
 import * as EventEmitter from "events";
 
 const emitter = new EventEmitter();
-emitter.setMaxListeners(100);
+emitter.setMaxListeners(999);
 
 @injectable()
 class ConsoleLogger implements ILogger {
