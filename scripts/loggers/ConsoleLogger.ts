@@ -1,12 +1,20 @@
 import {injectable} from "inversify";
 import {ILogger, LogLevel} from "./ILogger";
 import {map, clone} from "lodash";
+import * as EventEmitter from "events";
+
+const emitter = new EventEmitter();
+emitter.setMaxListeners(100);
 
 @injectable()
 class ConsoleLogger implements ILogger {
 
     private logLevel = LogLevel.Debug;
     private context: string[] = [];
+
+    constructor() {
+        emitter.on("logLevelChange", (level) => this.logLevel = level);
+    }
 
     debug(message: string) {
         if (this.logLevel <= LogLevel.Debug)
@@ -28,7 +36,7 @@ class ConsoleLogger implements ILogger {
     }
 
     setLogLevel(level: LogLevel) {
-        this.logLevel = level;
+        emitter.emit("logLevelChange", level);
     }
 
     createChildLogger(context: string): ILogger {
@@ -36,7 +44,7 @@ class ConsoleLogger implements ILogger {
         if (context) copy.push(context);
         let logger = new ConsoleLogger();
         logger.setContext(copy);
-        logger.setLogLevel(this.logLevel);
+        (<any>logger).logLevel = this.logLevel;
         return logger;
     }
 
