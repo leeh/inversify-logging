@@ -8,7 +8,6 @@ emitter.setMaxListeners(999);
 
 @injectable()
 class ConsoleLogger implements ILogger {
-
     private logLevel = LogLevel.Debug;
     private context: string[] = [];
 
@@ -16,23 +15,23 @@ class ConsoleLogger implements ILogger {
         emitter.on("logLevelChange", (level) => this.logLevel = level);
     }
 
-    debug(message: string) {
+    debug(...messages: string[]) {
         if (this.logLevel <= LogLevel.Debug)
-            console.log(this.stringifyContext(this.context), message);
+            console.log(this.stringifyContext(this.context), ...messages);
     }
 
-    info(message: string) {
+    info(...messages: string[]) {
         if (this.logLevel <= LogLevel.Info)
-            console.info(this.stringifyContext(this.context), message);
+            console.info(this.stringifyContext(this.context), ...messages);
     }
 
-    warning(message: string) {
+    warning(...messages: string[]) {
         if (this.logLevel <= LogLevel.Warning)
-            console.warn(this.stringifyContext(this.context), message);
+            console.warn(this.stringifyContext(this.context), ...messages);
     }
 
-    error(error: string | Error) {
-        console.error(this.stringifyContext(this.context), error);
+    error(...errors: (string | Error)[]) {
+        console.error(this.stringifyContext(this.context), ...errors);
     }
 
     setLogLevel(level: LogLevel) {
