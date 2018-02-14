@@ -15,7 +15,8 @@ export class NullLogger implements ILogger {
     error(...errors: (string | Error)[]) {
     }
 
-    setLogLevel(level: LogLevel) {
+    setLogLevel() {
+        
     }
 
     createChildLogger(context: string): ILogger {
