@@ -6,7 +6,7 @@ import {initContextLogger} from "../scripts/LoggingContextDecorator";
 
 describe("Given an object", () => {
 
-    context("when has got logger property", () => {
+    context("when has got a logger property", () => {
         context("when the logger is contextual", () => {
             it("should create a child logger", () => {
                 let object = new LoggableClass();

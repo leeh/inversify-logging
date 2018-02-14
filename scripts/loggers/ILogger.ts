@@ -14,7 +14,16 @@ export interface ILogger {
 
     error(...errors: (string | Error)[]);
 
-    setLogLevel(level: LogLevel);
+    /* @deprecated: use ILoggerConfig */
+    setLogLevel?(level: LogLevel);
 
     createChildLogger(context: string): ILogger;
+}
+
+export interface ILoggerConfig {
+    logLevel: LogLevel;
+}
+
+export class DefaultLoggerConfig implements ILoggerConfig {
+    logLevel: LogLevel.Debug
 }
