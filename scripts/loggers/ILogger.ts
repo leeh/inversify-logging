@@ -6,15 +6,24 @@ export enum LogLevel {
 }
 
 export interface ILogger {
-    debug(message: string);
+    debug(...messages: string[]);
 
-    info(message: string);
+    info(...messages: string[]);
 
-    warning(message: string);
+    warning(...messages: string[]);
 
-    error(error: string | Error);
+    error(...errors: (string | Error)[]);
 
-    setLogLevel(level: LogLevel);
+    /* @deprecated: use ILoggerConfig */
+    setLogLevel?(level: LogLevel);
 
     createChildLogger(context: string): ILogger;
+}
+
+export interface ILoggerConfig {
+    logLevel: LogLevel;
+}
+
+export class DefaultLoggerConfig implements ILoggerConfig {
+    logLevel = LogLevel.Debug
 }

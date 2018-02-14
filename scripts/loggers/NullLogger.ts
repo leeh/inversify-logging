@@ -3,19 +3,20 @@ import {ILogger, LogLevel} from "./ILogger";
 export class NullLogger implements ILogger {
 
 
-    debug(message: string) {
+    debug(...messages: string[]) {
     }
 
-    info(message: string) {
+    info(...messages: string[]) {
     }
 
-    warning(message: string) {
+    warning(...messages: string[]) {
     }
 
-    error(error: string | Error) {
+    error(...errors: (string | Error)[]) {
     }
 
-    setLogLevel(level: LogLevel) {
+    setLogLevel() {
+        
     }
 
     createChildLogger(context: string): ILogger {
