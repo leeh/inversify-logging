@@ -1,12 +1,12 @@
 import {injectable, inject, optional} from "inversify";
-import {ILogger, LogLevel, ILoggerConfig} from "./ILogger";
+import {ILogger, LogLevel, ILoggerConfig, DefaultLoggerConfig} from "./ILogger";
 import {map, clone} from "lodash";
 
 @injectable()
 class ConsoleLogger implements ILogger {
     private context: string[] = [];
 
-    constructor(@inject("ILoggerConfig") @optional() private config: ILoggerConfig) {
+    constructor(@inject("ILoggerConfig") @optional() private config: ILoggerConfig = new DefaultLoggerConfig()) {
 
     }
 

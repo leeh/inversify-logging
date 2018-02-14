@@ -25,5 +25,5 @@ export interface ILoggerConfig {
 }
 
 export class DefaultLoggerConfig implements ILoggerConfig {
-    logLevel: LogLevel.Debug
+    logLevel = LogLevel.Debug
 }
