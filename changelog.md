@@ -1,3 +1,7 @@
+# 0.2.1
+
+Avoid duplicated lodash versions
+
 # 0.2.0
 
 * Rewrite log level management using ILoggerConfig

@@ -1,6 +1,6 @@
 {
   "name": "inversify-logging",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "dependencies": {
     "lodash": "^4.17.5",
     "reflect-metadata": "0.1.8"
